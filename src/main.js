@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- 1. ИНИЦИАЛИЗАЦИЯ ---
-  // Проверяем, подключена ли библиотека Lucide
+  // --- 1. INITIALIZATION ---
+  // Check if Lucide library is connected
   if (typeof lucide !== 'undefined') {
       lucide.createIcons();
   }
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Плавный скролл
+  // Smooth Scroll (Lenis)
   const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   requestAnimationFrame(raf);
 
-  // --- 2. HERO АНИМАЦИЯ (Только если есть Canvas) ---
+  // --- 2. HERO ANIMATION (Only if Canvas exists) ---
   const canvas = document.getElementById('heroCanvas');
 
-  // 🔥 ВАЖНОЕ ИСПРАВЛЕНИЕ: Проверка существования канваса
+  // IMPORTANT: Canvas existence check
   if (canvas) {
       const ctx = canvas.getContext('2d');
       let width, height;
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initParticles();
       animateParticles();
 
-      // Hero контент (появляется только на главной)
+      // Hero content (only appears on home page)
       gsap.from('.hero__content > *', {
           y: 30,
           opacity: 0,
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // --- 3. АНИМАЦИЯ СЕКЦИЙ (GSAP) ---
+  // --- 3. SECTION ANIMATIONS (GSAP) ---
   const fadeElements = document.querySelectorAll('.section-title, .section-subtitle, .about__text, .innovations__content');
   if (fadeElements.length > 0) {
       fadeElements.forEach(el => {
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 
-  // --- 4. МОБИЛЬНОЕ МЕНЮ (Работает везде) ---
+  // --- 4. MOBILE MENU (Global) ---
   const burger = document.querySelector('.header__burger');
   const nav = document.querySelector('.header__nav');
   const navLinks = document.querySelectorAll('.header__link');
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // --- 5. ХЕДЕР ПРИ СКРОЛЛЕ ---
+  // --- 5. HEADER ON SCROLL ---
   let lastScroll = 0;
   const header = document.querySelector('.header');
 
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lastScroll = currentScroll;
   });
 
-  // --- 6. АККОРДЕОН И ФОРМА ---
+  // --- 6. ACCORDION & FORM ---
   // FAQ
   document.querySelectorAll('.accordion__trigger').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   });
 
-  // Форма (Только если есть на странице)
+  // Form (Only if exists on the page)
   const form = document.getElementById('contactForm');
   if (form) {
       form.addEventListener('submit', (e) => {
@@ -217,28 +217,30 @@ document.addEventListener('DOMContentLoaded', () => {
           const msgBox = document.querySelector('.form__message');
           const captcha = document.getElementById('captcha').value;
 
+          // Simple math check
           if (parseInt(captcha) !== 8) {
-              msgBox.textContent = 'Ошибка вычисления!';
+              msgBox.textContent = 'Calculation error!';
               msgBox.style.color = 'red';
               return;
           }
 
           const btn = form.querySelector('button');
           const oldText = btn.textContent;
-          btn.textContent = 'Отправка...';
+          btn.textContent = 'Sending...';
           btn.disabled = true;
 
+          // Simulated API request
           setTimeout(() => {
               btn.textContent = oldText;
               btn.disabled = false;
-              msgBox.textContent = 'Заявка отправлена!';
+              msgBox.textContent = 'Application sent successfully!';
               msgBox.style.color = '#ccff00';
               form.reset();
           }, 1500);
       });
   }
 
-  // Cookie
+  // Cookie Popup
   const cookiePopup = document.getElementById('cookiePopup');
   if (cookiePopup && !localStorage.getItem('cookiesAccepted')) {
       setTimeout(() => cookiePopup.classList.add('is-visible'), 2000);

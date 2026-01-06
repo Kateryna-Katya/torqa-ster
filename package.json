@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/sphexa-bytez/",
+    "build": "vite build --base=/torqa-ster/",
     "preview": "vite preview"
   },
   "devDependencies": {
